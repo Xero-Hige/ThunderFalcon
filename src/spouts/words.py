@@ -7,7 +7,8 @@ from streamparse.spout import Spout
 class WordSpout(Spout):
 
     def initialize(self, stormconf, context):
-	words = [x for x in os.listdir("/home/hige/ThunderFalcon/tweets")]
+	words = [x for x in os.listdir("./tweets") if ".log" in x]
+	words.sort()
 	self.words = itertools.cycle(words)
 
     def next_tuple(self):
