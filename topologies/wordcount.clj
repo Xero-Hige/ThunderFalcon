@@ -20,5 +20,14 @@
           :p 2
           )
     }
+    {"count-boltz" (python-bolt-spec
+          options
+          {"count-bolt" :shuffle}
+          "bolts.wordcount2.WorldCounter"
+          ["word" "count"]
+          :p 2
+          )
+    }
+
   ]
 )
