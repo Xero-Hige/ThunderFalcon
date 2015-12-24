@@ -2,6 +2,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import json
 
+
 from streamparse.bolt import Bolt
 
 
@@ -11,6 +12,8 @@ class JsonDecrypter(Bolt):
 
     def process(self, tup):
         tweet = tup.values[0]
+        tweet = tweet.replace("'",'"')
+
         try:
             obj = json.loads(tweet)
         except Exception, e:
