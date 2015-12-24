@@ -11,11 +11,19 @@ class Logger(Bolt):
 
     def process(self, tup):
         words = tup.values[0]
-        at_user = words["user"]["screen_name"]
-        display_name = words["user"]["name"].title()
-        user_location = words["user"]["location"].title()
-        user_image = words["user"]["profile_image_url"]
+
+        if not words:
+		return
+
+	at_user = str(words["user"]["screen_name"])
+        display_name = str(words["user"]["name"]).title()
+        user_location = str(words["user"]["location"]).title()
+        user_image = str(words["user"]["profile_image_url"])
         text = words["text"]
 
         tweet = "\n\n@%s (%s)\n\tLocation: %s\n\tImage url: %s\n\nStatus:\n%s" % (at_user,display_name,user_location,user_image,text)
-        self.log(tweet)
+        try:
+		tweet = tweet.decode('unicode-escape')
+	except:
+		return #FIXME
+	self.log(tweet)
