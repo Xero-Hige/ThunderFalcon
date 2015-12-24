@@ -10,5 +10,5 @@ class Logger(Bolt):
         pass
 
     def process(self, tup):
-        dic = tup.values[0]
-        self.log(dic.values())
+        words = tup.values[0]
+        self.log(words)

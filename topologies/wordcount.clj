@@ -16,7 +16,7 @@
           options
           {"tweets-spout" :shuffle}
           "bolts.tokenizer.Tokenizer"
-          ["dict"]
+          ["words"]
           :p 2
           )
 

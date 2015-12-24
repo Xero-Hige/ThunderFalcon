@@ -11,4 +11,5 @@ class Tokenizer(Bolt):
 
     def process(self, tup):
         tweet = tup.values[0]
-        self.emit([{tweet[0]:tweet[-1]}])
+        words = tweet.split()
+        self.emit([words])
