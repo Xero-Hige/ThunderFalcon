@@ -26,8 +26,6 @@ class TweetSpout(Spout):
 
     def open_file(self):
         try:
-            self.log("Close file")
-
             self.file.close()
         except AttributeError:
             pass  # No need to close file
@@ -35,14 +33,12 @@ class TweetSpout(Spout):
         self.file = None
         while not self.file:
             try:
-                self.log("Next")
                 filename = self.words.next()
-                self.log("File " + filename)
+
                 if not ".log" in filename:
                     continue
 
                 filepath = os.path.join(TWEETS_FOLDER, filename)
-
                 self.file = open(filepath)
             except:
                 continue
