@@ -28,7 +28,7 @@ class TweetSpout(Spout):
         while not self.file:
             try:
                 filename = self.words.next()
-                if ".csv" in filename:
+                if not ".log" in filename:
                     continue
                 self.file = open(filename)
             except:
