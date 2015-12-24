@@ -5,6 +5,17 @@ from string import Template
 from streamparse.bolt import Bolt
 
 HTML_HEADER = """<html>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <link href="http://codegena.com/assets/css/image-preview-for-link.css" rel="stylesheet">
+    <script type="text/javascript">
+        $(function() {
+            $('#p1 a').miniPreview({ prefetch: 'pageload' });
+            $('#p2 a').miniPreview({ prefetch: 'parenthover' });
+            $('#p3 a').miniPreview({ prefetch: 'none' });
+        });
+    </script>
+    <script src="http://codegena.com/assets/js/image-preview-for-link.js"></script>
+
 	<head>
 		<title></title>
 	</head>
@@ -51,7 +62,7 @@ HTML_TEMPLATE = """
 					&nbsp;<strong>@$user</strong> (<em>$name</em>)</p>
 				<p>
 					From: <u>$location</u></p>
-				<p>
+				<p id="p3">
 					$text
 				<p>
 					&nbsp;</p>
@@ -72,6 +83,8 @@ class Logger(Bolt):
         with open('/var/www/html/out.html', 'w') as f:
             f.write(HTML_HEADER)
 
+        r = re.compile('(^.*)(1 sep 2012 )(.*$)')
+
     def process(self, tup):
         words = tup.values[0]
 
@@ -85,6 +98,10 @@ class Logger(Bolt):
         user_back = words["user"].get("profile_banner_url", " ")
 
         text = words["text"]
+        urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
+
+        for url in urls:
+            text = text.replace(url, '<a href="' + url + ' ">"' + url + '</a>')
 
         tweet = self.tweet_template.substitute(profile_pic=user_image, user=at_user, name=display_name,
                                                header=user_back, text=text, location=user_location)
