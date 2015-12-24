@@ -12,6 +12,10 @@ class JsonDecrypter(Bolt):
 
     def process(self, tup):
         tweet = tup.values[0]
+        tweet = tweet.replace("': False,","': false,")
+        tweet = tweet.replace("': True,","': true,")
+        tweet = tweet.replace("': None,","': none,")
+
         tweet = tweet.replace("u'",'"')
         tweet = tweet.replace("'",'"')
 
