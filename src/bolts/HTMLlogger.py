@@ -1,5 +1,6 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
+import re
 from string import Template
 
 from streamparse.bolt import Bolt
@@ -101,7 +102,7 @@ class Logger(Bolt):
         urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
 
         for url in urls:
-            text = text.replace(url, '<a href="' + url + ' ">"' + url + '</a>')
+            text = text.replace(url, '<a href="' + url + ' ">' + url + '</a>')
 
         tweet = self.tweet_template.substitute(profile_pic=user_image, user=at_user, name=display_name,
                                                header=user_back, text=text, location=user_location)
