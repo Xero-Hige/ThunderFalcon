@@ -9,7 +9,7 @@ HTML_TEMPLATE = """<html>
 		<title></title>
 	</head>
 	<body>
-		<div id="rcorners3">
+		<div id="rcorners3" style="background-image: url($header)" >
 			<div id="rcorners2">
 				<p>
 					<a href="$profile_pic"><img alt="" src="$profile_pic" style="width: 100px; height: 100px; float: left;" /></a></p>
@@ -39,12 +39,11 @@ HTML_TEMPLATE = """<html>
     width: 580px;
     height: 190px;
     margin: auto auto;
-color:  #0084b4;
+    color:  #0084b4;
 }
 
 #rcorners3 {
     border-radius: 25px;
-    background: url($header);
     background-position: left top;
     background-repeat: repeat;
     padding-top: 20px;

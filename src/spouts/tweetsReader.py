@@ -10,7 +10,8 @@ TWEETS_FOLDER = "/home/hige/ThunderFalcon/tweets"
 
 class TweetSpout(Spout):
     def initialize(self, stormconf, context):
-        words = [x for x in os.listdir(TWEETS_FOLDER)]
+        words = [x for x in os.listdir(TWEETS_FOLDER) if ".log" in x]
+        words.sort(reverse=True)
         self.words = itertools.cycle(words)
         self.file = None
         self.open_file()
@@ -34,9 +35,6 @@ class TweetSpout(Spout):
         while not self.file:
             try:
                 filename = self.words.next()
-
-                if not ".log" in filename:
-                    continue
 
                 filepath = os.path.join(TWEETS_FOLDER, filename)
                 self.file = open(filepath)
