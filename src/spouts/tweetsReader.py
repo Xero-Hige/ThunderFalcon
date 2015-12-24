@@ -20,7 +20,7 @@ class TweetSpout(Spout):
             self.open_file()
             tweet_to_emit = self.file.readline()
 
-        self.emit([word])
+        self.emit([tweet_to_emit])
 
     def open_file(self):
         self.file.close()
