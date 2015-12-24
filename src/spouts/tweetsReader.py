@@ -23,7 +23,11 @@ class TweetSpout(Spout):
         self.emit([tweet_to_emit])
 
     def open_file(self):
-        self.file.close()
+        try:
+            self.file.close()
+        except AttributeError:
+            pass #No need to close file
+
         self.file = None
         while not self.file:
             try:
