@@ -12,17 +12,17 @@
           )
     }
     ;; bolt configuration
-    {"tokenizer-bolt" (python-bolt-spec
+    {"decrypter-bolt" (python-bolt-spec
           options
           {"tweets-spout" :shuffle}
-          "bolts.tokenizer.Tokenizer"
-          ["words"]
+          "bolts.jsonDecrypter.JsonDecrypter"
+          ["tweetDict"]
           :p 2
           )
 
     "logger-bolt" (python-bolt-spec
           options
-          {"tokenizer-bolt" :shuffle}
+          {"decrypter-bolt" :shuffle}
           "bolts.logger.Logger"
           [ ]
           :p 2
