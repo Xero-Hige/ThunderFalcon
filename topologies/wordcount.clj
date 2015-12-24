@@ -23,7 +23,7 @@
     "logger-bolt" (python-bolt-spec
           options
           {"decrypter-bolt" :shuffle}
-          "bolts.logger.Logger"
+          "bolts.HTMLlogger.Logger"
           [ ]
           :p 2
           )

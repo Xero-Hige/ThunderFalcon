@@ -1,8 +1,8 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
-from streamparse.bolt import Bolt
-
 from string import Template
+
+from streamparse.bolt import Bolt
 
 HTML_TEMPLATE = """<html>
 	<head>
