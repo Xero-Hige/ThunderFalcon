@@ -29,6 +29,9 @@ class JsonDecrypter(Bolt):
 
         tweet = tweet.decode('unicode-escape')
 
+        self.log("\n\n\n\n%s:\n\n %s\n\n\n\n" % ("tweet: ", tweet))
+
+
         try:
             obj = json.loads(tweet)
         except Exception, e:
