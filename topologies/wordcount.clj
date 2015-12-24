@@ -25,7 +25,7 @@
           {"decrypter-bolt" :shuffle}
           "bolts.HTMLlogger.Logger"
           [ ]
-          :p 2
+          :p 1
           )
     }
   ]
