@@ -5,10 +5,12 @@ import os
 
 from streamparse.spout import Spout
 
+TWEETS_FOLDER = "/home/hige/ThunderFalcon/tweets"
+
 
 class TweetSpout(Spout):
     def initialize(self, stormconf, context):
-        words = [x for x in os.listdir("/home/hige/ThunderFalcon/tweets")]
+        words = [x for x in os.listdir(TWEETS_FOLDER)]
         self.words = itertools.cycle(words)
         self.file = None
         self.open_file()
@@ -28,7 +30,7 @@ class TweetSpout(Spout):
 
             self.file.close()
         except AttributeError:
-            pass #No need to close file
+            pass  # No need to close file
 
         self.file = None
         while not self.file:
@@ -38,6 +40,9 @@ class TweetSpout(Spout):
                 self.log("File " + filename)
                 if not ".log" in filename:
                     continue
-                self.file = open(filename)
+
+                filepath = os.path.join(TWEETS_FOLDER, filename)
+
+                self.file = open(filepath)
             except:
                 continue
