@@ -5,26 +5,26 @@
 (defn wordcount [options]
    [
     ;; spout configuration
-    {"word-spout" (python-spout-spec
+    {"tweets-spout" (python-spout-spec
           options
           "spouts.tweetsReader.TweetSpout"
-          ["word"]
+          ["tweet"]
           )
     }
     ;; bolt configuration
-    {"count-bolt" (python-bolt-spec
+    {"tokenizer-bolt" (python-bolt-spec
           options
-          {"word-spout" :shuffle}
-          "bolts.wordcount.WordCounter"
-          ["word" "count"]
+          {"tweets-spout" :shuffle}
+          "bolts.tokenizer.Tokenizer"
+          ["dict"]
           :p 2
           )
 
-    "countz-bolt" (python-bolt-spec
+    "logger-bolt" (python-bolt-spec
           options
-          {"count-bolt" :shuffle}
-          "bolts.worldcount.WorldCounter"
-          ["word" "count"]
+          {"tokenizer-bolt" :shuffle}
+          "bolts.logger.Logger"
+          [ ]
           :p 2
           )
     }
