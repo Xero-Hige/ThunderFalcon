@@ -17,7 +17,7 @@ class JsonDecrypter(Bolt):
         #Replace python values with json valid values
         tweet = tweet.replace("': False,","': false,")
         tweet = tweet.replace("': True,","': true,")
-        tweet = tweet.replace("': None,","': none,")
+        tweet = tweet.replace("': None,","': null,")
 
         #Removed unicode "u" since it can not be decrypted
         tweet = tweet.replace("u'",'"')
@@ -25,7 +25,7 @@ class JsonDecrypter(Bolt):
         #Replaced ' with "
         tweet = tweet.replace("'",'"')
 
-        tweet = re.sub("<a href[^>]*> \g","<a>",tweet)
+        tweet = re.sub("<a href[^>]*>","<a>",tweet)
 
         try:
             obj = json.loads(tweet)
