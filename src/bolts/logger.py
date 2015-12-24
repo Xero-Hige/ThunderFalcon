@@ -11,4 +11,4 @@ class Logger(Bolt):
 
     def process(self, tup):
         words = tup.values[0]
-        self.log(words)
+        self.log(words.keys())
