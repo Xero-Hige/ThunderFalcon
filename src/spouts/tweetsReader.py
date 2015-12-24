@@ -10,7 +10,26 @@ class TweetSpout(Spout):
     def initialize(self, stormconf, context):
         words = [x for x in os.listdir("/home/hige/ThunderFalcon/tweets")]
         self.words = itertools.cycle(words)
+        self.file = None
+        self.open_file()
 
     def next_tuple(self):
-        word = next(self.words)
+        tweet_to_emit = self.file.readline()
+
+        while not tweet_to_emit:
+            self.open_file()
+            tweet_to_emit = self.file.readline()
+
         self.emit([word])
+
+    def open_file(self):
+        self.file.close()
+        self.file = None
+        while not self.file:
+            try:
+                filename = self.words.next()
+                if ".csv" in filename:
+                    continue
+                self.file = open(filename)
+            except:
+                continue
