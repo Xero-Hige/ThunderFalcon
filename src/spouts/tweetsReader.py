@@ -6,7 +6,7 @@ import os
 from streamparse.spout import Spout
 
 
-class WordSpout(Spout):
+class TweetSpout(Spout):
     def initialize(self, stormconf, context):
         words = [x for x in os.listdir("/home/hige/ThunderFalcon/tweets")]
         self.words = itertools.cycle(words)

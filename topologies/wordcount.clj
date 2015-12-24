@@ -7,7 +7,7 @@
     ;; spout configuration
     {"word-spout" (python-spout-spec
           options
-          "spouts.words.WordSpout"
+          "spouts.tweetsReader.TweetSpout"
           ["word"]
           )
     }
