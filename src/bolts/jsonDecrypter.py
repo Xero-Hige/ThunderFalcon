@@ -1,10 +1,8 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
-from collections import Counter
+import json
 
 from streamparse.bolt import Bolt
-
-import json
 
 
 class JsonDecrypter(Bolt):
@@ -15,7 +13,8 @@ class JsonDecrypter(Bolt):
         tweet = tup.values[0]
         try:
             obj = json.loads(tweet)
-        except:
+        except Exception, e:
+            self.log('%s: %s' % ("Error: ", e.message))
             return
 
         self.emit([obj])
