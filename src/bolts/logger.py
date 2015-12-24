@@ -31,7 +31,6 @@ HTML_TEMPLATE = """<html>
 #rcorners2 {
     border-radius: 25px;
     border: 2px solid #73AD21;
-    background: #c0deed;
     padding-top: 5px;
     padding-right: 5px;
     padding-bottom: 5px;
@@ -39,19 +38,24 @@ HTML_TEMPLATE = """<html>
     width: 580px;
     height: 190px;
     margin: auto auto;
-    color:  #0084b4;
+    color:  #0000e3;
+ background-color: rgb(192, 222, 237);
+ background-color: rgba(192, 222, 237, 0.7);
 }
 
 #rcorners3 {
+background-size:cover;
+    border: 2px solid #1dcaff;
     border-radius: 25px;
-    background-position: left top;
-    background-repeat: repeat;
+    background-position: center center;
+    background-repeat: no-repeat;
     padding-top: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
     padding-left: 20px;
     width: 620px;
     height: 220px;
+
 }		</style>
 	</body>
 </html>"""
@@ -70,7 +74,7 @@ class Logger(Bolt):
         display_name = words["user"]["name"].title()
         user_location = words["user"]["location"]
         user_image = words["user"]["profile_image_url"].replace("_normal.jpg",".jpg")
-        user_back = words["user"]["profile_banner_url"]
+        user_back = words["user"].get("profile_banner_url"," ")
 
         text = words["text"]
 
