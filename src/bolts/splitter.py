@@ -16,5 +16,7 @@ class Splitter(Bolt):
         values["user_location"] = tweet_dict["user"]["location"]
         values["user_image"] = tweet_dict["user"]["profile_image_url"].replace("_normal.jpg", ".jpg")
         values["user_back"] = tweet_dict["user"].get("profile_banner_url", " ")
+        values["text"] = tweet_dict["text"]
+
 
         self.emit([values])
