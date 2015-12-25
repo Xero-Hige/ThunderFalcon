@@ -18,5 +18,4 @@ class Splitter(Bolt):
         values["user_back"] = tweet_dict["user"].get("profile_banner_url", " ")
         values["text"] = tweet_dict["text"]
 
-
         self.emit([values])
