@@ -22,4 +22,5 @@ class Filter(Bolt):
                 self.emit([tweet])  # FIXME
 
         except Exception, e:
-            self.log("Error: %s" % (e.message))
+            # self.log("Error: %s" % (e.message))
+            return
