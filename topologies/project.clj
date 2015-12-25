@@ -2,27 +2,27 @@
   (:use     [streamparse.specs])
   (:gen-class))
 
-(defn wordcount [options]
+(defn project [options]
    [
     ;; spout configuration
     {"tweets-spout" (python-spout-spec
           options
-          "spouts.tweetsReader.TweetSpout"
+          "spouts.tweetsFetcher.TweetSpout"
           ["tweet"]
           )
     }
     ;; bolt configuration
-    {"decrypter-bolt" (python-bolt-spec
+    {"filter-bolt" (python-bolt-spec
           options
           {"tweets-spout" :shuffle}
-          "bolts.jsonDecrypter.JsonDecrypter"
+          "bolts.tweetFilter.Filter"
           ["tweetDict"]
           :p 3
           )
 
     "splitter-bolt" (python-bolt-spec
           options
-          {"decrypter-bolt" :shuffle}
+          {"filter-bolt" :shuffle}
           "bolts.splitter.Splitter"
           ["tweetValuesDict"]
           :p 2
