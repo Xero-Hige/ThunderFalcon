@@ -1,7 +1,5 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
-from string import Template
-
 from streamparse.bolt import Bolt
 
 HTML_HEADER = """<html>
@@ -55,7 +53,6 @@ HTML_HEADER = """<html>
 
 class Logger(Bolt):
     def initialize(self, conf, ctx):
-        self.tweet_template = Template(HTML_TEMPLATE)
         with open('/var/www/html/out.html', 'w') as f:
             f.write(HTML_HEADER)
 
