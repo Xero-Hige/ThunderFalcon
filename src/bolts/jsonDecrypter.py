@@ -27,7 +27,7 @@ class JsonDecrypter(Bolt):
 
         tweet = re.sub("<a href[^>]*>","<a>",tweet)
 
-        tweet = tweet.decode('unicode-escape')
+        #tweet = tweet.decode('unicode-escape')
 
         #self.log("\n\n\n\n%s:\n\n %s\n\n\n\n" % ("tweet: ", tweet))
 
@@ -35,7 +35,7 @@ class JsonDecrypter(Bolt):
         try:
             obj = json.loads(tweet)
         except Exception, e:
-            self.log('%s: %s' % ("Error: ", e.message))
+            #self.log('%s: %s\nTWEET: %s\n\n\n\n' % ("Error: ", e.message,tweet))
             return
 
         self.emit([obj])
