@@ -37,7 +37,7 @@ class TweetSpout(Spout):
             try:
                 tweet_to_emit = self.tweets.next()
             except Exception, e:
-                self.log("Error: %s", e.message)
+                self.log("Error: %s" % (e.message))
                 self.generate_tweet_pool()
 
         self.emit([tweet_to_emit])
