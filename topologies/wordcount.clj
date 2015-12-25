@@ -17,12 +17,28 @@
           {"tweets-spout" :shuffle}
           "bolts.jsonDecrypter.JsonDecrypter"
           ["tweetDict"]
+          :p 3
+          )
+
+    "splitter-bolt" (python-bolt-spec
+          options
+          {"decrypter-bolt" :shuffle}
+          "bolts.splitter.Splitter"
+          ["tweetValuesDict"]
           :p 2
           )
 
-    "logger-bolt" (python-bolt-spec
+    "htmlGenerator-bolt" (python-bolt-spec
           options
-          {"decrypter-bolt" :shuffle}
+          {"splitter-bolt" :shuffle}
+          "bolts.HTMLgenerator.Generator"
+          ["HTMLtweet"]
+          :p 2
+          )
+
+    "htmlLogger-bolt" (python-bolt-spec
+          options
+          {"htmlGenerator-bolt" :shuffle}
           "bolts.HTMLlogger.Logger"
           [ ]
           :p 1

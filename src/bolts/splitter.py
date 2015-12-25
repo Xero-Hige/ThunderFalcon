@@ -3,7 +3,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 from streamparse.bolt import Bolt
 
 
-class Tokenizer(Bolt):
+class Splitter(Bolt):
     def initialize(self, conf, ctx):
         pass
 
