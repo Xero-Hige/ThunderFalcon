@@ -30,17 +30,17 @@ class TweetSpout(Spout):
         self.log("\n\n Got Iterator \n\n")
 
     def get_keys(self):
-        with open("keys.rsa", "r") as f:
-            self.CONSUMER_KEY = f.readline()
+        with open("/home/hige/dev/lein/thunderf/keys.rsa", "r") as f:
+            self.CONSUMER_KEY = f.readline().rstrip('\n')
             self.log("\n\n Key: %s \n\n" % (self.CONSUMER_KEY))
 
-            self.CONSUMER_SECRET = f.readline()
+            self.CONSUMER_SECRET = f.readline().rstrip('\n')
             self.log("\n\n Key: %s \n\n" % (self.CONSUMER_SECRET))
 
-            self.TOKEN_KEY = f.readline()
+            self.TOKEN_KEY = f.readline().rstrip('\n')
             self.log("\n\n Key: %s \n\n" % (self.TOKEN_KEY))
 
-            self.TOKEN_SECRET = f.readline()
+            self.TOKEN_SECRET = f.readline().rstrip('\n')
             self.log("\n\n Key: %s \n\n" % (self.TOKEN_SECRET))
 
     def next_tuple(self):
