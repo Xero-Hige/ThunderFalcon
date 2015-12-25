@@ -60,9 +60,8 @@ class Logger(Bolt):
         tweet = tup.values[0]
 
         try:
-            # tweet = tweet.decode('unicode-escape')
             with open('/var/www/html/out.html', 'a') as f:
                 f.write(tweet)
-        except:
+        except Exception, e:
+            self.log("Error: %s" % (e.message))
             return  # FIXME
-            # self.log(tweet)
