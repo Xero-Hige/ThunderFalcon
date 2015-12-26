@@ -15,7 +15,7 @@ HTML_TEMPLATE = """
 				<p>
 					&nbsp;<strong>@$user</strong> (<em>$name</em>)</p>
 				<p id="p3">
-					From: <u>$location</u>   <a href=http://www.google.com/maps/place/$latitude,$longitude/@$latitude,$longitude,17z/data=!3m1!1e3>⬤</a> </p>
+					From: <u>$location</u>   <a href=http://www.google.com/maps/place/$latitude,$longitude/@$latitude,$longitude,17z/data=!3m1!1e3>($latitude,$longitude)</a> </p>
 				<p id="p3">
 					$text
 				<p>
