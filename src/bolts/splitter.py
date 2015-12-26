@@ -1,5 +1,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
+import sys
+
 from streamparse.bolt import Bolt
 
 
@@ -29,11 +31,11 @@ class Splitter(Bolt):
                 values["longitude"] = tweet_dict["geo"]["coordinates"][0]
 
             elif "place" in tweet_dict and tweet_dict["place"]:
-                values["latitude"] = tweet_dict["bounding_box"]["coordinates"][0][0][1]
-                values["longitude"] = tweet_dict["bounding_box"]["coordinates"][0][0][0]
+                values["latitude"] = tweet_dict["place"]["bounding_box"]["coordinates"][0][0][1]
+                values["longitude"] = tweet_dict["place"]["bounding_box"]["coordinates"][0][0][0]
 
-        except Exception, e:
-            self.log("\n\n\n%s\n\n\n" % (e.message))
+        except, e:
+            self.log("\n\n\n%s\n\n\n%s\n\n\n" % (e.message, sys.exc_info()[0]))
             values["latitude"] = "0"
             values["longitude"] = "0"
 
