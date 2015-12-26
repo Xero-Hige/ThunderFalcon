@@ -18,4 +18,23 @@ class Splitter(Bolt):
         values["user_back"] = tweet_dict["user"].get("profile_banner_url", " ")
         values["text"] = tweet_dict["text"]
 
+        try:
+            if "coordinates" in tweet_dict and tweet_dict["coordinates"]:
+                values["latitude"] = tweet_dict["coordinates"]["coordinates"][1]
+                values["longitude"] = tweet_dict["coordinates"]["coordinates"][0]
+
+
+            elif "geo" in tweet_dict and tweet_dict["geo"]:
+                values["latitude"] = tweet_dict["geo"]["coordinates"][1]
+                values["longitude"] = tweet_dict["geo"]["coordinates"][0]
+
+            elif "place" in tweet_dict and tweet_dict["place"]:
+                values["latitude"] = tweet_dict["bounding_box"]["coordinates"][0][0][1]
+                values["longitude"] = tweet_dict["bounding_box"]["coordinates"][0][0][0]
+
+        except Exception, e:
+            self.log("\n\n\n%s\n\n\n" % (e.message))
+            values["latitude"] = "0"
+            values["longitude"] = "0"
+
         self.emit([values])
