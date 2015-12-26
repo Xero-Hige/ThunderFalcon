@@ -14,7 +14,7 @@ HTML_TEMPLATE = """
 					<a href="$profile_pic"><img alt="" src="$profile_pic" style="width: 100px; height: 100px; float: left;" /></a></p>
 				<p>
 					&nbsp;<strong>@$user</strong> (<em>$name</em>)</p>
-				<p>
+				<p id="p3">
 					From: <u>$location</u>   <a href=http://www.google.com/maps/place/$latitude,$longitude/@$latitude,$longitude,17z/data=!3m1!1e3>⬤</a> </p>
 				<p id="p3">
 					$text

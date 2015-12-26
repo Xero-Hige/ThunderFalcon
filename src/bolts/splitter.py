@@ -34,7 +34,7 @@ class Splitter(Bolt):
                 values["latitude"] = tweet_dict["place"]["bounding_box"]["coordinates"][0][0][1]
                 values["longitude"] = tweet_dict["place"]["bounding_box"]["coordinates"][0][0][0]
 
-        except, e:
+        except Exception, e:
             self.log("\n\n\n%s\n\n\n%s\n\n\n" % (e.message, sys.exc_info()[0]))
             values["latitude"] = "0"
             values["longitude"] = "0"
