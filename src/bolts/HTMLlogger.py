@@ -1,5 +1,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
+import codecs
+
 from streamparse.bolt import Bolt
 
 HTML_HEADER = """<html>
@@ -15,7 +17,8 @@ HTML_HEADER = """<html>
     <script src="http://codegena.com/assets/js/image-preview-for-link.js"></script>
 
 	<head>
-		<title></title>
+	<meta charset="UTF-8">
+	<title>Output</title>
 	</head>
 
 	<style type="text/css">
@@ -46,6 +49,7 @@ HTML_HEADER = """<html>
             padding-left: 20px;
             width: 620px;
             height: 220px;
+            margin: auto auto;
 
         }
     </style>"""
@@ -53,14 +57,15 @@ HTML_HEADER = """<html>
 
 class Logger(Bolt):
     def initialize(self, conf, ctx):
-        with open('/var/www/html/out.html', 'w') as f:
+        with codecs.open('/var/www/html/out.html', encoding='utf-8', mode='w') as f:
             f.write(HTML_HEADER)
 
     def process(self, tup):
         tweet = tup.values[0]
 
         try:
-            with open('/var/www/html/out.html', 'a') as f:
+            with codecs.open('/var/www/html/out.html', encoding='utf-8', mode='a') as f:
                 f.write(tweet)
-        except:
+        except Exception, e:
+            self.log("Error: %s" % (e.message))
             return  # FIXME
