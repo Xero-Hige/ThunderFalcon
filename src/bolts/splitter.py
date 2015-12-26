@@ -32,7 +32,18 @@ class Splitter(Bolt):
 
             elif "place" in tweet_dict and tweet_dict["place"]:
                 values["latitude"] = tweet_dict["place"]["bounding_box"]["coordinates"][0][0][1]
+                values["latitude"] += tweet_dict["place"]["bounding_box"]["coordinates"][0][1][1]
+                values["latitude"] += tweet_dict["place"]["bounding_box"]["coordinates"][0][2][1]
+                values["latitude"] += tweet_dict["place"]["bounding_box"]["coordinates"][0][3][1]
+                values["latitude"] /= 4
+
                 values["longitude"] = tweet_dict["place"]["bounding_box"]["coordinates"][0][0][0]
+                values["longitude"] += tweet_dict["place"]["bounding_box"]["coordinates"][0][1][0]
+                values["longitude"] += tweet_dict["place"]["bounding_box"]["coordinates"][0][2][0]
+                values["longitude"] += tweet_dict["place"]["bounding_box"]["coordinates"][0][3][0]
+                values["longitude"] /= 4
+
+
 
         except Exception, e:
             self.log("\n\n\n%s\n\n\n%s\n\n\n" % (e.message, sys.exc_info()[0]))
