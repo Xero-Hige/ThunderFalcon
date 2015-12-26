@@ -46,6 +46,7 @@ HTML_HEADER = """<html>
             padding-left: 20px;
             width: 620px;
             height: 220px;
+            margin: auto auto;
 
         }
     </style>"""
