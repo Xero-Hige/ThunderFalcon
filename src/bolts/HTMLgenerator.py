@@ -1,3 +1,4 @@
+# coding=utf-8
 from __future__ import absolute_import, print_function, unicode_literals
 
 import re
@@ -14,7 +15,7 @@ HTML_TEMPLATE = """
 				<p>
 					&nbsp;<strong>@$user</strong> (<em>$name</em>)</p>
 				<p>
-					From: <u>$location</u></p>
+					From: <u>$location</u>   <a href=http://www.google.com/maps/place/$latitude,$longitude/@$latitude,$longitude,17z/data=!3m1!1e3>⬤</a> </p>
 				<p id="p3">
 					$text
 				<p>
@@ -43,11 +44,14 @@ class Generator(Bolt):
         user_image = tweet_values["user_image"]
         user_back = tweet_values["user_back"]
         text = tweet_values["text"]
+        latitude = tweet_values["latitude"]
+        longitude = tweet_values["longitude"]
 
         text = self.add_link_tags(text)
 
         tweet = self.tweet_template.substitute(profile_pic=user_image, user=at_user, name=display_name,
-                                               header=user_back, text=text, location=user_location)
+                                               header=user_back, text=text, location=user_location, latitude=latitude,
+                                               longitude=longitude)
 
         self.emit([tweet])
 
