@@ -23,7 +23,8 @@ class TweetSpout(Spout):
     def generate_tweet_pool(self):
         twitter_stream = TwitterStream(auth=self.auth)
 
-        self.tweets = twitter_stream.statuses.sample()
+        self.tweets = twitter_stream.statuses.filter(locations="-180.0,-90.0, 180.0, 90.0")
+
 
     def get_keys(self):
         with open("/home/hige/dev/lein/thunderf/keys.rsa", "r") as f:

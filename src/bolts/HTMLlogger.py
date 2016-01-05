@@ -56,8 +56,7 @@ HTML_HEADER = """<html>
 
 class Logger(Bolt):
     def initialize(self, conf, ctx):
-        self.count = 0
-	with codecs.open('/var/www/html/out.html', encoding='utf-8', mode='w') as f:
+        with codecs.open('/var/www/html/out.html', encoding='utf-8', mode='w') as f:
             f.write(HTML_HEADER)
 
     def process(self, tup):
@@ -66,8 +65,7 @@ class Logger(Bolt):
         try:
             with codecs.open('/var/www/html/out.html', encoding='utf-8', mode='a') as f:
                 f.write(tweet)
-		self.count += 1
-		self.log("Count: "+str(self.count))
+
         except Exception, e:
             self.log("Error: %s" % (e.message))
             return  # FIXME
