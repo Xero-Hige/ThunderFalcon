@@ -7,8 +7,16 @@ from string import Template
 from streamparse.bolt import Bolt
 
 GEOJSON_TEMPLATE = """
-{"geometry": {"type": "Point", "coordinates": [$longitude,$latitude]}, "type": "Feature", "properties": {"Text": "@$user:\n$text"}}
-"""
+{
+	"geometry": {
+		"type": "Point",
+		"coordinates": [$longitude, $latitude]
+	},
+	"type": "Feature",
+	"properties": {
+		"Text": "@$user:\n$text"
+	}
+}"""
 
 
 class Generator(Bolt):
