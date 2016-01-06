@@ -28,18 +28,18 @@
           :p 2
           )
 
-    "htmlGenerator-bolt" (python-bolt-spec
+    "jsonGenerator-bolt" (python-bolt-spec
           options
           {"splitter-bolt" :shuffle}
-          "bolts.HTMLgenerator.Generator"
-          ["HTMLtweet"]
+          "bolts.geoJsonGenerator.Generator"
+          ["geoJsontweet"]
           :p 2
           )
 
-    "htmlLogger-bolt" (python-bolt-spec
+    "jsonLogger-bolt" (python-bolt-spec
           options
-          {"htmlGenerator-bolt" :shuffle}
-          "bolts.HTMLlogger.Logger"
+          {"jsonGenerator-bolt" :shuffle}
+          "bolts.geoJsonLogger.Logger"
           [ ]
           :p 1
           )
