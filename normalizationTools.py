@@ -11,14 +11,14 @@ def normalize_link(text):
 
 
 def normalize_users(text):
-    users = re.findall('@[^ @]*', text)
+    users = re.findall('@[^ @][^ @]*', text)
     for user in users:
         text = text.replace(user, ' @USER ')
     return text
 
 
 def normalize_hashtags(text):
-    htags = re.findall('#[^ #]*', text)
+    htags = re.findall('#[^ #][^ #]*', text)
     for htag in htags:
         text = text.replace(htag, htag[1:]+" ")
     return text
