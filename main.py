@@ -70,7 +70,7 @@ def main():
             if feature in chosen_features:
                 selected[feature] = 1
 
-        print perceptron.response(selected)
+        print perceptron.responses(selected)
         _input = raw_input("Tweet: ")
 
 
@@ -136,11 +136,11 @@ class Perceptron():
 
         for feature in features:
             for class_name, _class in classes.items():
-                _class[feature] = random.randrange(-1.0, 1.0)
+                _class[feature] = (random.random() - 0.5) * 2  # .randrange(-1.0, 1.0)
 
         self.classes = classes
 
-    def response(self,_input,class_name):
+    def response(self, _input, class_name):
         result = 0
         _class = self.classes[class_name]
         for feature in self.features:
@@ -150,7 +150,7 @@ class Perceptron():
     def responses(self, _input):
         response = []
         for class_name in self.langs:
-            result = self.response(_input,class_name)
+            result = self.response(_input, class_name)
 
             print class_name, " - ", result
             if result > 0:
@@ -160,32 +160,43 @@ class Perceptron():
 
     def train(self, train_data):
         it = 0
+        prev = 0.0
         while True:
             global_error = 0.0
             for data in train_data:
-                r = self.responses(data[0])
+                errors = []
                 for i in xrange(len(self.langs)):
                     name = self.langs[i]
-                    if data[1][i] == 1:
-                        if name not in r:
-                            vector = self.classes[name]
-                            self.update_vectors(data, vector, 2)
-                            global_error += 0.2
-                    else:
-                        if name in r:
-                            vector = self.classes[name]
-                            self.update_vectors(data, vector, -2)
-                            global_error += 0.2
+                    result = self.response(data[0], name)
+                    expected = data[1][i]
+
+                    error = expected - result
+
+                    if error != 0.0:
+                        vector = self.classes[name]
+                        self.update_vectors(data[0], vector, error)
+
+                    errors.append(error)
+
+                global_error += abs(max(errors))
             it += 1
-            if it > 20 or global_error == 0.0:
+            if it > 15 or global_error == 0.0 or global_error - prev < 0.3:
                 print "Learned in ", it, " iterations: (", global_error, ")"
                 break
             else:
                 print "No aprendi un carajo vieja (", it, ") Error -", global_error, "-"
+                prev = global_error
 
     def update_vectors(self, data, vector, error):
-        for coordinate in vector.keys():
-            vector[coordinate] += data[0].get(coordinate, 0) * self.learning_rate * error
+        coordinates = sorted(vector.keys())
+        if error > 10:
+            factor = len(coordinates)
+        else:
+            factor = 1 / self.learning_rate
+        for coordinate in coordinates:
+            print coordinate , vector[coordinate]
+            vector[coordinate] += ((data.get(coordinate, 0) * error) / factor)
+            print coordinate , vector[coordinate]
 
 
 main()
