@@ -1,3 +1,4 @@
+# coding=utf-8
 import re
 
 # TODO Compile regexp
@@ -23,11 +24,32 @@ def normalize_hashtags(text):
         text = text.replace(htag, htag[1:]+" ")
     return text
 
+def normalize_spaces(text):
+    spaces = re.findall('[ ][ ]*', text)
+    for space in spaces:
+        text = text.replace(space," ")
+    return text
+
+
+def normalize_emojis(text):
+    emojis = {"=)":"SMILE",";)":"WINK"}
+    for emoji in emojis:
+        text = text.replace(emoji,emojis[emoji])
+    return text
+
+def normalize_punctuation(text):
+    punctuation = ",;.:()'\"?¿!~¡"
+    for punct in punctuation:
+        text = text.replace(punct," "+punct+" ")
+    return text
 
 def normalize(text):
     text = text.lower()
     text = normalize_link(text)
     text = normalize_users(text)
     text = normalize_hashtags(text)
+    text = normalize_emojis(text)
+    text = normalize_punctuation(text)
+    text = normalize_spaces(text)
 
     return text

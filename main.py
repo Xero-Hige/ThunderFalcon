@@ -1,3 +1,4 @@
+# coding=utf-8
 import random
 
 from normalizationTools import normalize
@@ -5,12 +6,12 @@ from normalizationTools import normalize
 __author__ = 'hige'
 
 NGRAM = 2
-STOPCHARS = ["\n", "\t", " "]
+STOPCHARS = "\n\t '\"?()¡¿[]{}=.:,;"
 
 
 def main():
     texts = []
-    with open("/home/hige/Okami/ex1.html") as fle:
+    """ with open("/home/hige/Okami/ex1.html") as fle:
         with open("/home/hige/Okami/bulk1.txt", 'w') as fil:
             with open("/home/hige/Okami/bulk2.txt", 'w') as filo:
                 lines = fle.readlines()
@@ -33,34 +34,43 @@ def main():
 
                     texts.append(normalized)
                     fil.writelines(line + "\n")
-                    filo.writelines(normalized + "\n")
+                    filo.writelines(normalized + "\n") """
 
+    with open("train.xp") as train:
+        for line in train:
+            text = line[2:]
+            text = normalize(text)
+            label = int(line[0])
+            texts.append([text, label])
+    print "Loaded file"
     total_features = {}
-    texts_features = []
-    for text in texts:
+    for values_text in texts:
+        text = values_text[0]
         features = extract_features(text)
-        texts_features.append(features)
+        values_text[0] = features
 
         for feature in features:
             total_features[feature] = total_features.get(feature, 0) + 1
 
+    print "Loaded features"
     chosen_features = choose_features(total_features, len(texts))
     # vectors = vectorize([text], chosen_features)
-
+    print "Chosen features"
     # for count, feature in chosen_features:
     #    print feature, "-", count, "\n"
 
-    train_data = []
+    for line in texts:
+        for feature in line[0]:
+            # print feature
+            if feature not in chosen_features:
+                line[0].pop(feature)
+        line[1] = [1 if x == line[1] else -1 for x in xrange(1, 5)]
 
-    with open("train.xp") as train:
-        i = 0
-        for line in train:
-            label = int(line[0])
-            train_data.append([texts_features[i], [1 if x == label else -1 for x in xrange(1, 5)]])
+    print "Loaded train data"
 
     perceptron = Perceptron(chosen_features)
 
-    perceptron.train(train_data)
+    perceptron.train(texts)
 
     _input = raw_input("Tweet: ")
     while _input:
@@ -103,7 +113,7 @@ def extract_features(text):
 def choose_features(features, n, threshold=1):
     selected = []
     for feature, count in features.items():
-        if float(count) / n > threshold or count == 1:
+        if float(count) / n > threshold:
             continue
         selected.append(feature)  # (feature,count))
     return selected
@@ -122,7 +132,7 @@ def vectorize(texts, features):
     return vectors
 
 
-class Perceptron():
+class Perceptron(object):
     def __init__(self, features):
         self.features = features
         self.langs = ["english", "spanish", "another", "unknown"]
@@ -136,7 +146,7 @@ class Perceptron():
 
         for feature in features:
             for class_name, _class in classes.items():
-                _class[feature] = (random.random() - 0.5) * 2  # .randrange(-1.0, 1.0)
+                _class[feature] = ((random.random() - 0.5) * 2) / len(features)  # .randrange(-1.0, 1.0)
 
         self.classes = classes
 
@@ -163,6 +173,7 @@ class Perceptron():
         prev = 0.0
         while True:
             global_error = 0.0
+            random.shuffle(train_data)
             for data in train_data:
                 errors = []
                 for i in xrange(len(self.langs)):
@@ -180,7 +191,7 @@ class Perceptron():
 
                 global_error += abs(max(errors))
             it += 1
-            if it > 15 or global_error == 0.0 or global_error - prev < 0.3:
+            if it > 100 or global_error == 0.0:  # je or global_error - prev < 0.3:
                 print "Learned in ", it, " iterations: (", global_error, ")"
                 break
             else:
@@ -189,14 +200,11 @@ class Perceptron():
 
     def update_vectors(self, data, vector, error):
         coordinates = sorted(vector.keys())
-        if error > 10:
-            factor = len(coordinates)
-        else:
-            factor = 1 / self.learning_rate
+        factor = len(data.keys())
         for coordinate in coordinates:
-            print coordinate , vector[coordinate]
-            vector[coordinate] += ((data.get(coordinate, 0) * error) / factor)
-            print coordinate , vector[coordinate]
+            if coordinate in data:
+                # print data
+                vector[coordinate] += ((data[coordinate] * error) / factor)
 
 
 main()
